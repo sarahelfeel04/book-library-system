@@ -9,13 +9,14 @@ $errors = [];
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     validate ();
+    $destPath = fileUpload();
 
-    if (empty($errors)) {
+    if (empty($errors) && $destPath!=false) {
         $db->query('INSERT INTO books(title, author, publishing_date, cover_image, summary) VALUES(:title, :author, :publishing_date, :cover_image, :summary)', [
             'title' => $_POST['title'],
             'author' => $_POST['author'],
             'publishing_date' => $_POST['publishing_date'],
-            'cover_image' => $_POST['cover_image'],
+            'cover_image' => $destPath,
             'summary' => $_POST['summary']
         ]);
 
@@ -53,8 +54,8 @@ function validate(){
         $errors['publishing_date'] = 'Publishing Date is required';
     }
 
-    if (strlen($_POST['cover_image']) === 0) {
-        $errors['cover_image'] = 'Cover Image URL is required';
+    if ($_FILES['cover_image']['error'] === 4) {
+        $errors['cover_image'] = 'Cover Image is required';
     }
 }
 
@@ -70,17 +71,22 @@ function fileUpload(){
         $allowedfileExtensions = array('jpg', 'gif', 'png');
         if (in_array($fileExtension, $allowedfileExtensions)) {
             // Directory in which the uploaded file will be moved
-            $uploadFileDir = 'uploads/';
-            $dest_path = $uploadFileDir . strlen($_POST['title']);
+            $title = $_POST['title'];
+            $newFileName = $title . '.' . $fileExtension;
+            $uploadFileDir = 'C:\laragon\www\book-library-system\uploads\\';
+            $dest_path = $uploadFileDir . $newFileName;
 
             if (move_uploaded_file($fileTmpPath, $dest_path)) {
                 echo 'File is successfully uploaded.';
-                // Save the file path to the database along with other book details
+                return $dest_path;
+
             } else {
-                echo 'There was some error moving the file to upload directory';
+                $errors['cover_image'] = 'Error moving file to upload directory';
+                return false;
             }
         } else {
-            echo 'Upload failed. Allowed file types: ' . implode(',', $allowedfileExtensions);
+            $errors['cover_image'] = 'No file uploaded or upload error occurred';
+            return false;
         }
     }
 }
