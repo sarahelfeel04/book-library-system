@@ -23,6 +23,7 @@
         });
     });
 </script>
+
 <main class="min-h-screen flex flex-col items-center justify-start py-8">
     <div class="bg-white shadow-md rounded-lg overflow-hidden w-full max-w-4xl p-6">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -48,16 +49,25 @@
                     <button class="delete-button inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
                         Delete Book
                     </button>
-                    <div class="delete-alert absolute left-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-2 px-4 hidden">
-                        <p class="mb-2">Are you sure you want to delete this book?</p>
-                        <button class="confirm-delete inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 mr-2">
-                            Yes
-                        </button>
-                        <button class="cancel-delete inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-gray-700 bg-gray-200 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
-                            Cancel
-                        </button>
-                    </div>
+                        <div class="delete-alert absolute left-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-2 px-4 hidden">
+                            <form method="POST">
+                            <p class="mb-2">Are you sure you want to delete this book?</p>
+                            <input type="hidden" name="book_id" value="3"> <!-- Replace with dynamic book ID -->
+                            <button type="submit" name="confirm_delete" class="confirm-delete inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 mr-2">
+                                Yes
+                            </button>
+                            <button type="button" class="cancel-delete inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-gray-700 bg-gray-200 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500" onclick="closeDeleteAlert()">
+                                Cancel
+                            </button>
+                            </form>
+                        </div>
                 </div>
+
+                    <script>
+                        function closeDeleteAlert() {
+                            document.querySelector('.delete-alert').classList.add('hidden');
+                        }
+                    </script>
             </div>
             <div>
                 <img src="<?= htmlspecialchars($book['cover_image']) ?>" alt="<?= htmlspecialchars($book['title']) ?>" class="rounded-lg bg-gray-100 w-full">
