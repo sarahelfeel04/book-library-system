@@ -70,7 +70,7 @@ function fileUpload(){
         $allowedfileExtensions = array('jpg', 'gif', 'png');
         if (in_array($fileExtension, $allowedfileExtensions)) {
             // Directory in which the uploaded file will be moved
-            $uploadFileDir = 'C:/laragon/www/book-library-system/uploads/';
+            $uploadFileDir = 'uploads/';
             $dest_path = $uploadFileDir . strlen($_POST['title']);
 
             if (move_uploaded_file($fileTmpPath, $dest_path)) {
