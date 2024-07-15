@@ -33,7 +33,7 @@
                 <!-- Add Book Button -->
                 <div class="group relative">
                     <div class="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
-                        <a href="/books/add" class="flex items-center justify-center h-full w-full text-gray-700 transition duration-300 ease-in-out transform bg-gray-200 hover:bg-gray-300 rounded-md hover:scale-105">
+                        <a href="/book/add" class="flex items-center justify-center h-full w-full text-gray-700 transition duration-300 ease-in-out transform bg-gray-200 hover:bg-gray-300 rounded-md hover:scale-105">
                             <svg class="h-12 w-12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <line x1="12" y1="5" x2="12" y2="19"></line>
                                 <line x1="5" y1="12" x2="19" y2="12"></line>

@@ -3,31 +3,53 @@
 $config = require('config.php');
 $db = new Database($config['database']);
 
-$heading = 'Add Book';
+
 $errors = [];
 
+$book = $db->query('select * from books where id = :id', [
+    'id' => $_GET['id']
+])->findOrFail();
+
+$heading = 'Edit Book';
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    
     $errors = validate($errors);
     $errors = fileUpload($errors);
-    $newFilePath=getFilePath();
+    $newFilePath=getFilePath($book);
 
-    //var_dump($errors);
 
 
     if (empty($errors)) {
-        $db->query('INSERT INTO books(title, author, publishing_date, cover_image, summary) VALUES(:title, :author, :publishing_date, :cover_image, :summary)', [
+        $db->query('UPDATE books SET title = :title, author = :author, publishing_date = :publishing_date, cover_image = :cover_image, summary = :summary WHERE id = :id', [
             'title' => $_POST['title'],
             'author' => $_POST['author'],
             'publishing_date' => $_POST['publishing_date'],
             'cover_image' => $newFilePath,
-            'summary' => $_POST['summary']
+            'summary' => $_POST['summary'],
+            'id' => $book['id'],
         ]);
 
         header('Location: /books');
         exit;
     }
+    
+   // else
+   // echo "errors found";
+}
 
+function getFilePath($book){
+    if (isset($_FILES['cover_image']) && $_FILES['cover_image']['error'] === UPLOAD_ERR_OK) {
+        $title = $_POST['title'];
+        $fileName = $_FILES['cover_image']['name'];
+        $fileNameCmps = explode(".", $fileName);
+        $fileExtension = strtolower(end($fileNameCmps));
+        $newFileName = $title . '.' . $fileExtension;
+        $uploadFileDir= 'uploads\\';
+        $dest_path = $uploadFileDir . $newFileName;
+        return $dest_path;}
+    else
+        return $book['cover_image'];
+    //}
 }
 
 function displayError($errors, $field) {
@@ -40,7 +62,6 @@ function validate($errors){
     // Validate input fields for a book
     if (strlen($_POST['title']) === 0) {
         $errors['title'] = 'Book Name is required';
-        //var_dump($errors);
     }
 
     if (strlen($_POST['title']) > 255) {
@@ -53,37 +74,16 @@ function validate($errors){
 
     if (strlen($_POST['author']) > 255) {
         $errors['author'] = 'Author name cannot exceed 255 characters';
-        //var_dump($errors);
     }
 
     if (strlen($_POST['publishing_date']) === 0) {
         $errors['publishing_date'] = 'Publishing Date is required';
     }
-
-    if (!isset($_FILES['cover_image']) || $_FILES['cover_image']['error'] === 4) {
-        $errors['cover_image'] = 'Cover Image is required';
-    }
-    if (strlen($_POST['summary']) === 0) {
-        $errors['summary'] = 'Summary is required';
-    }
-
-    //var_dump($errors);
-
+    //I'm allowing summary to be empty
     return $errors;
-
-
 }
 
-function getFilePath(){
-    $title = $_POST['title'];
-    $fileName = $_FILES['cover_image']['name'];
-    $fileNameCmps = explode(".", $fileName);
-    $fileExtension = strtolower(end($fileNameCmps));
-    $newFileName = $title . '.' . $fileExtension;
-    $uploadFileDir= 'uploads\\';
-    $dest_path = $uploadFileDir . $newFileName;
-    return $dest_path;
-}
+    
 function fileUpload($errors){
     if (isset($_FILES['cover_image']) && $_FILES['cover_image']['error'] === UPLOAD_ERR_OK) {
         $fileTmpPath = $_FILES['cover_image']['tmp_name'];
@@ -93,7 +93,7 @@ function fileUpload($errors){
         $fileNameCmps = explode(".", $fileName);
         $fileExtension = strtolower(end($fileNameCmps));
 
-        $allowedfileExtensions = array('jpg', 'gif', 'png');
+        $allowedfileExtensions = array('jpg', 'gif', 'png', 'jpeg');
         if (in_array($fileExtension, $allowedfileExtensions)) {
             // Directory in which the uploaded file will be moved
             $title = $_POST['title'];
@@ -118,4 +118,4 @@ function fileUpload($errors){
     return $errors;
 }
 
-require 'views/book-add.view.php';
+require "views/book-edit.view.php";

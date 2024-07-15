@@ -6,5 +6,6 @@ return [
     '/contact' => 'controllers/contact.php',
     '/books' => 'controllers/books.php',
     '/book' => 'controllers/book.php',
-    '/books/add' => 'controllers/book-add.php',
+    '/book/add' => 'controllers/book-add.php',
+    '/book/edit' => 'controllers/book-edit.php',
 ];
