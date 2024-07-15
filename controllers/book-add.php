@@ -8,15 +8,18 @@ $errors = [];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
-    validate ();
-    $destPath = fileUpload();
+    $errors = validate($errors);
+    $errors = fileUpload($errors);
+
+    //var_dump($errors);
+
 
     if (empty($errors) && $destPath!=false) {
         $db->query('INSERT INTO books(title, author, publishing_date, cover_image, summary) VALUES(:title, :author, :publishing_date, :cover_image, :summary)', [
             'title' => $_POST['title'],
             'author' => $_POST['author'],
             'publishing_date' => $_POST['publishing_date'],
-            'cover_image' => $destPath,
+            'cover_image' => 'uploads\\'.  $_POST['title'],
             'summary' => $_POST['summary']
         ]);
 
@@ -32,10 +35,11 @@ function displayError($errors, $field) {
     }
 }
 
-function validate(){
+function validate($errors){
     // Validate input fields for a book
     if (strlen($_POST['title']) === 0) {
         $errors['title'] = 'Book Name is required';
+        //var_dump($errors);
     }
 
     if (strlen($_POST['title']) > 255) {
@@ -48,6 +52,7 @@ function validate(){
 
     if (strlen($_POST['author']) > 255) {
         $errors['author'] = 'Author name cannot exceed 255 characters';
+        //var_dump($errors);
     }
 
     if (strlen($_POST['publishing_date']) === 0) {
@@ -57,9 +62,18 @@ function validate(){
     if (!isset($_FILES['cover_image']) || $_FILES['cover_image']['error'] === 4) {
         $errors['cover_image'] = 'Cover Image is required';
     }
+    if (strlen($_POST['summary']) === 0) {
+        $errors['summary'] = 'Summary is required';
+    }
+
+    //var_dump($errors);
+
+    return $errors;
+
+
 }
 
-function fileUpload(){
+function fileUpload($errors){
     if (isset($_FILES['cover_image']) && $_FILES['cover_image']['error'] === UPLOAD_ERR_OK) {
         $fileTmpPath = $_FILES['cover_image']['tmp_name'];
         $fileName = $_FILES['cover_image']['name'];
@@ -88,7 +102,9 @@ function fileUpload(){
             $errors['cover_image'] = 'No file uploaded or upload error occurred';
             return false;
         }
+
     }
+    return $errors;
 }
 
 require 'views/book-add.view.php';
