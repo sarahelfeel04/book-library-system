@@ -2,7 +2,7 @@
 <?php require('partials/nav.php') ?>
 <?php require('partials/banner.php') ?>
 <main>
-    <form class="max-w-md mx-auto mt-8" method="POST">
+    <form class="max-w-md mx-auto mt-8" method="POST" enctype="multipart/form-data">
         <div class="space-y-8">
             <div class="border-b border-gray-900/10 pb-8">
                 <h2 class="text-xl font-bold leading-8 text-gray-900">Book Details</h2>
