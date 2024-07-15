@@ -21,7 +21,7 @@
 
                     <div>
                         <label for="publishing_date" class="block text-sm font-medium leading-6 text-gray-900">Publishing Date</label>
-                        <input type="text" name="publishing_date" id="publishing_date" autocomplete="publishing_date" class="block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                        <input type="date" name="publishing_date" id="publishing_date" autocomplete="publishing_date" class="block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                     </div>
                     <?php displayError($errors, 'publishing_date'); ?>
 
