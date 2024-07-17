@@ -7,4 +7,4 @@ $heading = 'My Books';
 
 $books = $db->query('select * from books')->get();
 
-require "views/books.view.php";
+require "views/books/index.view.php";

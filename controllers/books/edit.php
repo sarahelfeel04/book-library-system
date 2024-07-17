@@ -60,25 +60,6 @@ function displayError($errors, $field) {
 
 function validate($errors){
     // Validate input fields for a book
-    /*if (strlen($_POST['title']) === 0) {
-        $errors['title'] = 'Book Name is required';
-    }
-
-    if (strlen($_POST['title']) > 255) {
-        $errors['title'] = 'Book Name cannot exceed 255 characters';
-    }
-
-    if (strlen($_POST['author']) === 0) {
-        $errors['author'] = 'Author is required';
-    }
-
-    if (strlen($_POST['author']) > 255) {
-        $errors['author'] = 'Author name cannot exceed 255 characters';
-    }
-
-    if (strlen($_POST['publishing_date']) === 0) {
-        $errors['publishing_date'] = 'Publishing Date is required';
-    }*/
     if (!Validator::string($_POST['title']))
         $errors['title'] = 'Book Name should be between 1 and 255 characters';
 
@@ -92,7 +73,6 @@ function validate($errors){
         $errors['summary'] = 'Summary should be between 1 and 1000 characters';
 
     //no need to re enter same image again, hence no check on image. default is same img in db
-
     return $errors;
 }
 
@@ -131,4 +111,4 @@ function fileUpload($errors){
     return $errors;
 }
 
-require "views/book-edit.view.php";
+require "views/books/edit.view.php";

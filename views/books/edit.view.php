@@ -1,6 +1,6 @@
-<?php require('partials/head.php') ?>
-<?php require('partials/nav.php') ?>
-<?php require('partials/banner.php') ?>
+<?php require('views/partials/head.php') ?>
+<?php require('views/partials/nav.php') ?>
+<?php require('views/partials/banner.php') ?>
 
 <main class="min-h-screen flex flex-col items-center justify-start py-8">
     <div class="bg-white shadow-md rounded-lg overflow-hidden w-full max-w-4xl p-6">
@@ -50,4 +50,5 @@
         </div>
     </div>
 </main>
-<?php require('partials/footer.php') ?>
+
+<?php require('views/partials/footer.php') ?>

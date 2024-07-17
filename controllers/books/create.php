@@ -102,4 +102,4 @@ function fileUpload($errors){
     return $errors;
 }
 
-require 'views/book-add.view.php';
+require 'views/books/create.view.php';
