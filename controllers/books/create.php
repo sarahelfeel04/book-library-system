@@ -12,12 +12,9 @@ $errors = [];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
-    $errors = validate($errors);
+    $errors = validateInputs($errors);
     $errors = fileUpload($errors);
     $newFilePath=getFilePath();
-
-    //var_dump($errors);
-
 
     if (empty($errors)) {
         $db->query('INSERT INTO books(title, author, publishing_date, cover_image, summary) VALUES(:title, :author, :publishing_date, :cover_image, :summary)', [
@@ -40,7 +37,7 @@ function displayError($errors, $field) {
     }
 }
 
-function validate($errors){
+function validateInputs($errors){
 
     if (!Validator::string($_POST['title']))
         $errors['title'] = 'Book Name should be between 1 and 255 characters';

@@ -18,7 +18,7 @@ $book = $db->query('select * from books where id = :id', [
 $heading = 'Edit Book';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $errors = validate($errors);
+    $errors = validateInputs($errors);
     $errors = fileUpload($errors);
     $newFilePath=getFilePath($book);
 
@@ -38,8 +38,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
     
-   // else
-   // echo "errors found";
 }
 
 function getFilePath($book){
@@ -54,7 +52,6 @@ function getFilePath($book){
         return $dest_path;}
     else
         return $book['cover_image'];
-    //}
 }
 
 function displayError($errors, $field) {
@@ -63,7 +60,7 @@ function displayError($errors, $field) {
     }
 }
 
-function validate($errors){
+function validateInputs($errors){
     // Validate input fields for a book
     if (!Validator::string($_POST['title']))
         $errors['title'] = 'Book Name should be between 1 and 255 characters';
@@ -77,7 +74,7 @@ function validate($errors){
     if (!Validator::string($_POST['summary'], 1, 1000))
         $errors['summary'] = 'Summary should be between 1 and 1000 characters';
 
-    //no need to re enter same image again, hence no check on image. default is same img in db
+    //no need check image default is same image in db
     return $errors;
 }
 
@@ -105,11 +102,9 @@ function fileUpload($errors){
 
             } else {
                 $errors['cover_image'] = 'Error moving file to upload directory';
-                //return false;
             }
         } else {
             $errors['cover_image'] = 'No file uploaded or upload error occurred';
-            //return false;
         }
 
     }
