@@ -1,5 +1,5 @@
 <?php
-
+require('Validator.php');
 $config = require('config.php');
 $db = new Database($config['database']);
 
@@ -60,7 +60,7 @@ function displayError($errors, $field) {
 
 function validate($errors){
     // Validate input fields for a book
-    if (strlen($_POST['title']) === 0) {
+    /*if (strlen($_POST['title']) === 0) {
         $errors['title'] = 'Book Name is required';
     }
 
@@ -78,8 +78,21 @@ function validate($errors){
 
     if (strlen($_POST['publishing_date']) === 0) {
         $errors['publishing_date'] = 'Publishing Date is required';
-    }
-    //I'm allowing summary to be empty
+    }*/
+    if (!Validator::string($_POST['title']))
+        $errors['title'] = 'Book Name should be between 1 and 255 characters';
+
+    if (!Validator::string($_POST['author']))
+        $errors['author'] = 'Author Name should be between 1 and 255 characters';
+
+    if (!Validator::string($_POST['publishing_date']))
+        $errors['publishing_date'] = 'Publishing date is required';
+
+    if (!Validator::string($_POST['summary'], 1, 1000))
+        $errors['summary'] = 'Summary should be between 1 and 1000 characters';
+
+    //no need to re enter same image again, hence no check on image. default is same img in db
+
     return $errors;
 }
 

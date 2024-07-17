@@ -1,5 +1,5 @@
 <?php
-
+require('Validator.php');
 $config = require('config.php');
 $db = new Database($config['database']);
 
@@ -37,37 +37,21 @@ function displayError($errors, $field) {
 }
 
 function validate($errors){
-    // Validate input fields for a book
-    if (strlen($_POST['title']) === 0) {
-        $errors['title'] = 'Book Name is required';
-        //var_dump($errors);
-    }
 
-    if (strlen($_POST['title']) > 255) {
-        $errors['title'] = 'Book Name cannot exceed 255 characters';
-    }
+    if (!Validator::string($_POST['title']))
+        $errors['title'] = 'Book Name should be between 1 and 255 characters';
 
-    if (strlen($_POST['author']) === 0) {
-        $errors['author'] = 'Author is required';
-    }
+    if (!Validator::string($_POST['author']))
+        $errors['author'] = 'Author Name should be between 1 and 255 characters';
 
-    if (strlen($_POST['author']) > 255) {
-        $errors['author'] = 'Author name cannot exceed 255 characters';
-        //var_dump($errors);
-    }
+    if (!Validator::string($_POST['publishing_date']))
+        $errors['publishing_date'] = 'Publishing date is required';
 
-    if (strlen($_POST['publishing_date']) === 0) {
-        $errors['publishing_date'] = 'Publishing Date is required';
-    }
-
-    if (!isset($_FILES['cover_image']) || $_FILES['cover_image']['error'] === 4) {
+    if (Validator::file($_FILES['cover_image']))
         $errors['cover_image'] = 'Cover Image is required';
-    }
-    if (strlen($_POST['summary']) === 0) {
-        $errors['summary'] = 'Summary is required';
-    }
 
-    //var_dump($errors);
+    if (!Validator::string($_POST['summary'], 1, 1000))
+        $errors['summary'] = 'Summary should be between 1 and 1000 characters';
 
     return $errors;
 
