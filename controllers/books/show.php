@@ -8,6 +8,11 @@ $db = new Database($config['database']);
 
 $heading = 'Book';
 
+$id = isset($_GET['id']) ? $_GET['id'] : null;
+if ($id === null || $id === '')
+    abort();
+
+else {
 $book = $db->query('select * from books where id = :id', [
     'id' => $_GET['id']
 ])->findOrFail();
@@ -38,3 +43,4 @@ view("books/show.view.php", [
     'heading'=> 'Book',
     'book'=>$book,
 ]);
+}
