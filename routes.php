@@ -17,4 +17,7 @@ $router->get('/contact', 'controllers/contact.php');
 $router->get('/books', 'controllers/books/index.php');
 $router->get('/book', 'controllers/books/show.php');
 $router->get('/book/add', 'controllers/books/create.php');
+$router->post('/book/add', 'controllers/books/create.php');
 $router->get('/book/edit', 'controllers/books/edit.php');
+$router->post('/book/edit', 'controllers/books/edit.php');
+$router->post('/book', 'controllers/books/show.php');
