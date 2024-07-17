@@ -1,10 +1,13 @@
 <?php
 
-$config = require('config.php');
+$config = require(base_path('config.php'));
 $db = new Database($config['database']);
 
 $heading = 'My Books';
 
 $books = $db->query('select * from books')->get();
 
-require "views/books/index.view.php";
+view("books/index.view.php", [
+    'heading'=> 'My Books',
+    'books'=>$books,
+]);

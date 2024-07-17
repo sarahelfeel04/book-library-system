@@ -1,6 +1,6 @@
-<?php require('views/partials/head.php') ?>
-<?php require('views/partials/nav.php') ?>
-<?php require('views/partials/banner.php') ?>
+<?php require(base_path('views/partials/head.php')) ?>
+<?php require(base_path('views/partials/nav.php')) ?>
+<?php require(base_path('views/partials/banner.php')) ?>
 <main>
     <form class="max-w-md mx-auto mt-8" method="POST" enctype="multipart/form-data">
         <div class="space-y-8">
@@ -62,4 +62,4 @@
 </main>
 
 
-<?php require('views/partials/footer.php') ?>
+<?php require(base_path('views/partials/footer.php')) ?>

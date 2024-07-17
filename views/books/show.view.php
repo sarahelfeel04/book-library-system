@@ -1,6 +1,6 @@
-<?php require('views/partials/head.php') ?>
-<?php require('views/partials/nav.php') ?>
-<?php require('views/partials/banner.php') ?>
+<?php require(base_path('views/partials/head.php')) ?>
+<?php require(base_path('views/partials/nav.php')) ?>
+<?php require(base_path('views/partials/banner.php')) ?>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -70,11 +70,11 @@
                     </script>
             </div>
             <div>
-                <img src="<?= htmlspecialchars($book['cover_image']) ?>" alt="<?= htmlspecialchars($book['title']) ?>" class="rounded-lg bg-gray-100 w-full">
+                <img src="<?= htmlspecialchars($book['cover_image']); ?>"  alt="<?= htmlspecialchars($book['title']) ?>" class="rounded-lg bg-gray-100 w-full">
             </div>
         </div>
     </div>
 </main>
 
 
-<?php require('views/partials/footer.php') ?>
+<?php require(base_path('views/partials/footer.php')) ?>

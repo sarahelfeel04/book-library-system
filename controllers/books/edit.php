@@ -1,6 +1,6 @@
 <?php
-require('Validator.php');
-$config = require('config.php');
+require(base_path('Validator.php'));
+$config = require(base_path('config.php'));
 $db = new Database($config['database']);
 
 
@@ -111,4 +111,8 @@ function fileUpload($errors){
     return $errors;
 }
 
-require "views/books/edit.view.php";
+view("books/edit.view.php", [
+    'heading'=> 'Edit Book',
+    'book'=>$book,
+    'errors'=>$errors,
+]);

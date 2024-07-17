@@ -1,6 +1,6 @@
 <?php
 
-$config = require('config.php');
+$config = require(base_path('config.php'));
 $db = new Database($config['database']);
 
 $heading = 'Book';
@@ -31,4 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } 
 }
 
-require "views/books/show.view.php";
+view("books/show.view.php", [
+    'heading'=> 'Book',
+    'book'=>$book,
+]);
