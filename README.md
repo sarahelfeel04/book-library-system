@@ -1,93 +1,122 @@
-# Book-Library-System
+# Book Library System
 
+Welcome to the Book Library System project! This is a simple library management application built using PHP and MySQL. Below are the steps to set up and run the application on your local machine using Laragon.
 
+## Table of Contents
 
-## Getting started
+- [Prerequisites](#prerequisites)
+- [Setting Up the Project](#setting-up-the-project)
+- [Database Setup](#database-setup)
+- [Running the Application](#running-the-application)
+- [Application Structure](#application-structure)
+- [Contributing](#contributing)
+- [License](#license)
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+## Prerequisites
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+Make sure you have the following installed on your machine:
 
-## Add your files
+- [Laragon](https://laragon.org/download/)
+- PHP (included with Laragon)
+- MySQL (included with Laragon)
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
+## Setting Up the Project
 
-```
-cd existing_repo
-git remote add origin https://gitlab.com/sarah.elfeel/book-library-system.git
-git branch -M main
-git push -uf origin main
-```
+1. **Clone the Repository**
 
-## Integrate with your tools
+   Clone the repository to your local machine:
 
-- [ ] [Set up project integrations](https://gitlab.com/sarah.elfeel/book-library-system/-/settings/integrations)
+   ```bash
+   git clone https://github.com/sarah.elfeel/book-library-system.git
+   cd book-library-system
+   ```
 
-## Collaborate with your team
+2. **Open Laragon**
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Set auto-merge](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
+   - Start Laragon and open the Laragon terminal.
 
-## Test and Deploy
+3. **Set Up the Environment**
 
-Use the built-in continuous integration in GitLab.
+   - Navigate to the project directory:
 
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing (SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
+     ```bash
+     cd C:\laragon\www\book-library-system
+     ```
 
-***
+4. **Set Up Database connection on TablePlus or HeidiSQL in Laragon**
+    - use port 3306
+    - connect on localhost
+    - user should be root
+    - database name: library
 
-# Editing this README
+## Database Setup
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thanks to [makeareadme.com](https://www.makeareadme.com/) for this template.
+1. **Create Database**
 
-## Suggestions for a good README
+   Open the Laragon MySQL console or phpMyAdmin and run the following SQL commands to create and populate the database:
 
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+   ```sql
+   CREATE DATABASE library;
 
-## Name
-Choose a self-explaining name for your project.
+   USE library;
 
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+   CREATE TABLE books (
+       id INT PRIMARY KEY AUTO_INCREMENT,
+       title VARCHAR(255),
+       author VARCHAR(255),
+       publishing_date DATE,
+       cover_image VARCHAR(255),
+       summary TEXT
+   );
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+   INSERT INTO books (title, author, publishing_date, cover_image, summary)
+   VALUES
+   ('To Kill a Mockingbird', 'Harper Lee', '1960-07-11', 'uploads\\To Kill A Mockingbird.jpg', 'A novel about the serious issues of rape and racial inequality.'),
+   ('The Great Gatsby', 'F. Scott Fitzgerald', '1925-04-21', 'uploads\\The Great Gatsby.jpg', 'A story about the young and mysterious millionaire Jay Gatsby and his quixotic passion for the beautiful Daisy Buchanan.'),
+   ('Pride and Prejudice', 'Jane Austen', '1813-01-28', 'uploads\\Pride and Prejudice.jpg', 'A romantic novel that charts the emotional development of the protagonist Elizabeth Bennet.'),
+   ('Moby-Dick', 'Herman Melville', '1851-10-18', 'uploads\\Moby Dick.jpg', 'The narrative of Captain Ahabs obsessive quest to kill the white whale, Moby Dick.'),
+   ('Die Wolke', 'Gudrun Pausewang', '1987-12-12', 'uploads\\Die Wolke.jpg', 'The story was written after the 1986 Chernobyl nuclear disaster in Ukraine, with a 14-year-old girl having to deal with the consequences of a fictional similar disaster in Germany.'),
+   ('Effi Briest', 'Theodor Fontan', '1895-05-05', 'uploads\\Effi Briest.jpg', 'Effi Briest is a realist novel by Theodor Fontane. Published in book form in 1895, Effi Briest marks both a watershed and a climax in the poetic realism of literature.'),
+   ('Reminders of him', 'Colleen Hoover', '2022-01-18', 'uploads\\Reminders Of Him.jpg', 'It was about a young mother reaching out for her daughter shes never met, after serving time for a tragic mistake.'),
+   ('Löcher: Die Geheimnisse von Green Lake', 'Louis Sachar', '1998-05-06', 'uploads\\Locher.jpg', 'The book centers on Stanley Yelnats, who is sent to Camp Green Lake, a correctional boot camp in a desert in Texas, after being falsely accused of theft.'),
+   ('November 9', 'Colleen Hoover', '2015-11-10', 'uploads\\November 9.jpg', 'The novel centres on an 18-year-old woman who moves to Michigan with her family after the death of her father. Once there, she becomes romantically involved with her neighbour, but a startling discovery forces them apart. Things are further complicated by another family tragedy.'),
+   ('The Seven Husbands of Evelyn Hugo', 'Taylor Jenkins Reid', '2017-06-13', 'uploads\\The Seven Husbands of Evelyn Hugo.jpg', 'Hugo comes from a poor background, but marries the first of her many husbands in order to move to Hollywood and pursue her career. The novel spans over the entirety of Hugos life, and revolves around the circumstances surrounding each of her marriages.'),
+   ('Animal Farm', 'George Orwell', '1945-08-17', 'uploads\\Animal Farm.jpg', 'It tells the story of a group of anthropomorphic farm animals who rebel against their human farmer, hoping to create a society where the animals can be equal, free, and happy.'),
+   ('The Giver', 'Lois Lowry', '1993-02-16', 'uploads\\The Giver.jpg', 'The Giver is a 1993 American young adult dystopian novel written by Lois Lowry, set in a society which at first appears to be utopian but is revealed to be dystopian as the story progresses.'),
+   ('The Lord of the Rings', 'J. R. R. Tolkien', '1954-07-29', 'uploads\\The Lord of the Rings.jpg', 'The Lord of the Rings is the saga of a group of sometimes reluctant heroes who set forth to save their world from consummate evil.');
+   ```
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+## Running the Application
 
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+1. **Start the Server**
 
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+   Open the Laragon terminal and navigate to the project directory. Run the following command:
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+   ```bash
+   cd book-library-system
+   php -S localhost:8888 -t public
+   ```
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
+2. **Access the Application**
+
+   Open your web browser and go to `http://localhost:8888`.
+
+## Application Structure
+
+- **Controllers:** PHP files handling the business logic.
+- **Views:** Templates for the HTML output.
+- **Core:** Contains core functionalities such as routing, database connection, and helper functions.
+- **Config:** Configuration files like database settings.
+- **Public:** Includes index file and uploads folder with images for simplicity
 
 ## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
-
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
-
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
+Contributions are welcome! Please feel free to fork the repository and submit pull requests. For major changes, please open an issue first to discuss what you would like to change.
 
 ## License
-For open source projects, say how it is licensed.
 
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+---
+
+Feel free to modify or extend any section as needed!
