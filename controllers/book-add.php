@@ -69,7 +69,7 @@ function getFilePath(){
     return $dest_path;
 }
 function fileUpload($errors){
-    if (isset($_FILES['cover_image']) && $_FILES['cover_image']['error'] === UPLOAD_ERR_OK) {
+    if (isset($_FILES['cover_image']) && $_FILES['cover_image']['error'] === UPLOAD_ERR_OK && empty($errors)) {
         $fileTmpPath = $_FILES['cover_image']['tmp_name'];
         $fileName = $_FILES['cover_image']['name'];
         $fileSize = $_FILES['cover_image']['size'];
