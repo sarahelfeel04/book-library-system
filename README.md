@@ -27,7 +27,7 @@ Make sure you have the following installed on your machine:
    Clone the repository to your local machine:
 
    ```bash
-   git clone https://github.com/sarah.elfeel/book-library-system.git
+   git clone https://github.com/sarahelfeel04/book-library-system.git
    cd book-library-system
    ```
 
